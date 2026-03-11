@@ -22,14 +22,22 @@ function gerarOpcoesParcelamento(valorTotal) {
     }
 }
 
+let pixCopiaEColaAtual = "";
+
 function copiarPix() {
-    navigator.clipboard.writeText(CHAVE_PIX).then(() => {
+    // Se o código não foi gerado, não faz nada
+    if (!pixCopiaEColaAtual) return;
+
+    // Copia a linha digitável completa (com valor, nome, etc)
+    navigator.clipboard.writeText(pixCopiaEColaAtual).then(() => {
         const btn = document.getElementById("btnCopiarPix");
-        btn.innerHTML = '<i class="fas fa-check"></i> CHAVE PIX COPIADA!';
-        btn.style.background = "#00a650";
+        const textoOriginal = btn.innerHTML; // Salva o HTML original (ícone + texto)
+
+        btn.innerHTML = '<i class="fas fa-check"></i> CÓDIGO PIX COPIADO!';
+        btn.style.background = "#28a745"; // Fica verde
 
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-copy"></i> CLIQUE AQUI PARA COPIAR A CHAVE PIX';
+            btn.innerHTML = textoOriginal; // Volta ao normal
             btn.style.background = "#32bcad";
         }, 3000);
     });
@@ -180,6 +188,7 @@ function processarCompra() {
         if(metodo === 'pix') {
             const valorPix = window.totalBase * 0.95;
             const qrData = gerarPayloadPix(valorPix);
+            pixCopiaEColaAtual = qrData;
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrData)}`;
 
             document.getElementById('pix-qrcode').src = qrUrl;
