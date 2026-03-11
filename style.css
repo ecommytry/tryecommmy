@@ -1,16 +1,17 @@
 /* =========================================
-   1. VARIÁVEIS E BASE (SUAS CORES ORIGINAIS)
+   1. VARIÁVEIS E BASE (CORES CORRIGIDAS)
 ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
 
 :root {
-    /* Mantendo as variáveis essenciais que você já tinha no HTML */
-    --accent-green: #00a650; 
+    --primary: #e31919; /* Vermelho Principal da Loja */
+    --secondary: #000000; /* Preto */
+    --accent-green: #00a650; /* Verde de sucesso/desconto */
     --error: #e31919;
+    --dark: #111111;
     --bg-gray: #f0f2f5;
-    
-    /* Nota: Se você tinha um --primary ou --secondary específico antes, 
-       o seu navegador vai puxar automaticamente agora que tirei os meus! */
+    --text-main: #333333;
+    --text-muted: #666666;
 }
 
 * {
@@ -22,7 +23,7 @@
 
 body {
     background-color: var(--bg-gray);
-    color: #333;
+    color: var(--text-main);
     overflow-x: hidden;
 }
 
@@ -30,15 +31,14 @@ body {
    2. CABEÇALHO E NAVEGAÇÃO (NAVBAR)
 ========================================= */
 header {
-    /* CORRIGIDO: Removido o 'position: sticky' para não ficar fixo! */
-    position: relative; 
-    background: var(--primary); /* Puxa a sua cor original */
+    position: relative; /* Rola normalmente com a página */
+    background: var(--primary); /* Fundo vermelho */
     z-index: 1000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .top-bar {
-    background: var(--secondary); /* Puxa a sua cor original */
+    background: var(--secondary); /* Fundo preto */
     color: white;
     text-align: center;
     font-size: 0.75rem;
@@ -57,13 +57,16 @@ header {
     gap: 20px;
 }
 
+/* LOGO CORRIGIDA: Branco com Preto */
 .logo {
-    color: white;
+    color: white; /* "ELETRO" em branco */
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: -1px;
 }
-.logo span { color: var(--secondary); }
+.logo span { 
+    color: var(--secondary); /* "SHOP" em preto */
+}
 
 .search-wrapper {
     flex: 1;
@@ -87,7 +90,7 @@ header {
     border: none;
     padding: 0 20px;
     cursor: pointer;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 1.2rem;
 }
 
@@ -131,7 +134,7 @@ header {
     border: none;
     padding: 8px 20px;
     font-weight: 800;
-    color: #64748b;
+    color: var(--text-muted);
     cursor: pointer;
     border-radius: 20px;
     transition: 0.3s;
@@ -228,7 +231,7 @@ header {
 }
 
 .rating { color: #f59e0b; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; }
-.rating span { color: #64748b; font-size: 0.75rem; font-weight: normal; }
+.rating span { color: var(--text-muted); font-size: 0.75rem; font-weight: normal; }
 
 .p-title { font-size: 1rem; color: #333; min-height: 45px; margin-bottom: 10px; font-weight: 600;}
 .old-p { text-decoration: line-through; color: #999; font-size: 0.85rem; display: block; }
