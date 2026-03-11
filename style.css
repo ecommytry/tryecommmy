@@ -1,0 +1,394 @@
+/* =========================================
+   VARIÁVEIS E CONFIGURAÇÕES GERAIS
+========================================= */
+:root {
+    --primary: #e31919;
+    --dark: #1a1a1a;
+    --gray: #f4f4f4;
+    --white: #ffffff;
+    --green: #00a650;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background: var(--gray); color: #333; overflow-x: hidden; }
+
+/* =========================================
+   CABEÇALHO E NAVEGAÇÃO
+========================================= */
+.top-bar { background: var(--dark); color: #fff; text-align: center; padding: 8px; font-weight: bold; font-size: 12px; }
+.nav-main { background: var(--primary); padding: 15px 8%; display: flex; align-items: center; justify-content: space-between; gap: 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.logo { color: #fff; font-size: 30px; font-weight: 900; letter-spacing: -1px; }
+.logo span { color: var(--dark); }
+
+.search-wrapper { flex: 1; display: flex; max-width: 600px; }
+.search-wrapper input { width: 100%; padding: 12px 20px; border: none; border-radius: 5px 0 0 5px; outline: none; font-size: 1rem; }
+.search-wrapper button { background: var(--dark); color: #fff; border: none; padding: 0 25px; border-radius: 0 5px 5px 0; cursor: pointer; transition: 0.2s; }
+.search-wrapper button:hover { background: #333; }
+
+.cart-btn { display: flex; align-items: center; color: #fff; cursor: pointer; gap: 10px; padding: 5px 10px; border-radius: 8px; transition: 0.2s; }
+.cart-btn:hover { background: rgba(0,0,0,0.1); }
+.cart-btn i { font-size: 1.5rem; }
+.cart-info p { font-size: 0.8rem; margin: 0; }
+#cart-count { background: #fff; color: var(--primary); padding: 2px 8px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; }
+
+.categories { background: #fff; display: flex; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow-x: auto; }
+.tab-btn { background: none; border: none; padding: 15px 25px; font-weight: bold; cursor: pointer; color: #555; border-bottom: 4px solid transparent; transition: 0.2s; white-space: nowrap; }
+.tab-btn:hover { color: var(--primary); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+/* =========================================
+   GRID E CARDS DE PRODUTOS
+========================================= */
+.content { padding: 40px 8%; }
+.section-title { font-size: 22px; border-left: 5px solid var(--primary); padding-left: 15px; margin-bottom: 25px; color: var(--dark); display: flex; align-items: center; gap: 10px; }
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+
+.card { background: #fff; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; transition: 0.3s; border: 1px solid #ddd; position: relative; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: var(--primary); }
+
+.f-gratis { color: var(--green); font-weight: bold; font-size: 11px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+.img-box { height: 180px; text-align: center; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; }
+.img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.rating { color: #f59e0b; font-size: 0.8rem; margin-bottom: 5px; }
+.rating span { color: #888; font-size: 0.75rem; margin-left: 5px; }
+
+.p-title { font-size: 14px; color: #333; height: 40px; overflow: hidden; margin-bottom: 10px; line-height: 1.4; }
+.old-p { color: #999; text-decoration: line-through; font-size: 12px; }
+.new-p { color: var(--primary); font-size: 24px; font-weight: 900; display: block; margin: 2px 0; }
+.parc { font-size: 13px; color: #666; font-weight: bold; margin-bottom: 15px; }
+
+.btn-details { background: #444; color: white; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.btn-details:hover { background: #666; }
+.btn-buy { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.btn-buy:hover { background: #cc1616; }
+
+/* =========================================
+   CARRINHO LATERAL (OFF-CANVAS)
+========================================= */
+.cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 4000; backdrop-filter: blur(3px); }
+.cart-sidebar { position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100vh; background: #fff; z-index: 4001; display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.cart-sidebar.open { right: 0; }
+
+.cart-header { padding: 20px; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; }
+.cart-header h3 { margin: 0; }
+.close-sidebar { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+.sidebar-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+.sidebar-item img { width: 60px; height: 60px; object-fit: contain; }
+.sidebar-item-info { flex: 1; }
+.sidebar-item-info h4 { font-size: 0.9rem; margin: 0 0 5px 0; color: #333; }
+.sidebar-item-info p { color: var(--green); font-weight: bold; margin: 0; font-size: 1rem; }
+.btn-remove-sidebar { color: #dc3545; background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+
+.cart-footer { padding: 20px; border-top: 1px solid #ddd; background: #f9f9f9; }
+.cart-total { display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 15px; color: #333; }
+.btn-checkout { width: 100%; padding: 18px; background: var(--green); color: white; border: none; border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+.btn-checkout:hover { background: #008a43; }
+
+/* =========================================
+   MODAL DE ESPECIFICAÇÕES E PROMOÇÃO
+========================================= */
+.modal-specs-overlay, .modal-blur { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
+
+.spec-card, .modal-content { background: white; width: 100%; max-width: 450px; padding: 30px; border-radius: 20px; text-align: center; border-top: 8px solid var(--primary); animation: bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes bounceIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.spec-header i { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
+.spec-header h2, .modal-content h2 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
+.spec-body p { font-size: 1rem; color: #666; line-height: 1.6; margin-bottom: 25px; background: #f9f9f9; padding: 15px; border-radius: 10px; }
+.btn-close-spec, .btn-modal { width: 100%; background: #1a1a1a; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+.btn-close-spec:hover, .btn-modal:hover { background: var(--primary); }
+
+.modal-badge { background: var(--green); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+#countdown { font-size: 3rem; font-weight: 900; color: var(--primary); margin: 20px 0; }
+
+/* =========================================
+   NOTIFICAÇÕES (TOAST)
+========================================= */
+.toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+.toast { background: #333; color: white; padding: 15px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideIn 0.3s ease-out forwards; border-left: 5px solid var(--green); font-size: 0.95rem; }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes fadeOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+/* =========================================
+   CARROSSEL DE AVALIAÇÕES (NOVO)
+========================================= */
+.reviews-section {
+    margin-top: 50px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Efeito de fade (sombra branca) nas laterais para não cortar seco */
+.carousel-container::before,
+.carousel-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    z-index: 2;
+}
+.carousel-container::before { left: 0; background: linear-gradient(to right, #fff 0%, transparent 100%); }
+.carousel-container::after { right: 0; background: linear-gradient(to left, #fff 0%, transparent 100%); }
+
+.carousel-track {
+    display: inline-flex;
+    gap: 25px;
+    /* A mágica do movimento infinito está aqui: 35s é a velocidade */
+    animation: scrollCarousel 35s linear infinite;
+}
+
+/* Pausa a animação se o cliente passar o mouse em cima para ler */
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollCarousel {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Card de cada comentário */
+.review-card {
+    background: var(--gray);
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 320px;
+    max-width: 320px;
+    white-space: normal; /* Permite quebrar linha */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: 0.3s;
+}
+.review-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+
+.review-header { display: flex; align-items: center; gap: 15px; }
+.avatar-cliente {
+    width: 45px; height: 45px;
+    background: var(--primary); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 1.2rem;
+}
+
+.reviewer-info h4 { margin: 0; font-size: 1rem; color: #333; display: flex; align-items: center; gap: 5px; }
+.reviewer-info .verificado { color: var(--green); font-size: 0.8rem; }
+.reviewer-info .stars { color: #f59e0b; font-size: 0.85rem; margin-top: 3px; }
+
+.review-text { color: #555; font-size: 0.95rem; line-height: 1.5; font-style: italic; }
+.review-product { font-size: 0.8rem; color: var(--green); font-weight: bold; margin-top: auto; border-top: 1px dashed #ccc; padding-top: 10px; }
+
+/* =========================================
+   OFERTA INTELIGENTE (TOP RIGHT)
+========================================= */
+.promo-top-right {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 350px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    z-index: 5000;
+    overflow: hidden;
+    border: 2px solid var(--primary);
+    animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.close-promo {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #999;
+    transition: 0.2s;
+}
+.close-promo:hover { color: var(--primary); }
+
+.promo-content { padding: 25px 20px 15px; text-align: center; }
+.promo-content h2 { margin: 10px 0; font-size: 1.4rem; color: #333; }
+.promo-content p { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
+
+.promo-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-accept {
+    background: var(--green); color: white; border: none; padding: 12px;
+    border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.2s;
+}
+.btn-accept:hover { background: #008a43; transform: scale(1.02); }
+
+.btn-decline {
+    background: transparent; color: #888; border: none; padding: 8px;
+    font-size: 0.85rem; text-decoration: underline; cursor: pointer;
+}
+.btn-decline:hover { color: #555; }
+
+/* Barra de tempo verde na base */
+.progress-bar-container { width: 100%; height: 6px; background: #e0e0e0; }
+.progress-bar-green { height: 100%; background: var(--green); width: 100%; transition: width 1s linear; }
+
+/* =========================================
+   DESTAQUE DE PÁSCOA NO NAVBAR
+========================================= */
+.tab-pascoa {
+    background: linear-gradient(45deg, #6b21a8, #9333ea) !important;
+    color: white !important;
+    border-radius: 30px !important;
+    padding: 10px 25px !important;
+    margin-left: 15px;
+    box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+    animation: pulseGlow 2s infinite;
+    border: none !important;
+}
+
+.tab-pascoa i { color: #facc15; margin-right: 5px; }
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(147, 51, 234, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); }
+}
+
+/* =========================================
+   MODAL EXPLOSIVO DE PÁSCOA
+========================================= */
+.modal-pascoa-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-pascoa-content {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: elasticPop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes elasticPop {
+    0% { transform: scale(0.3); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.close-pascoa {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    z-index: 10;
+    transition: 0.3s;
+}
+.close-pascoa:hover { background: rgba(255,255,255,0.4); transform: rotate(90deg); }
+
+.pascoa-header {
+    background: linear-gradient(135deg, #4c1d95 0%, #7e22ce 100%);
+    padding: 40px 20px 30px;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.pascoa-icon-bg {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -70px auto 15px;
+    font-size: 2.5rem;
+    color: #4c1d95;
+    box-shadow: 0 10px 25px rgba(234, 179, 8, 0.4);
+    border: 5px solid white;
+}
+
+.pascoa-header h2 { font-size: 2.2rem; font-weight: 900; margin: 0; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+.pascoa-header h3 { font-size: 1.1rem; color: #fde047; font-weight: 600; margin-top: 5px; }
+
+.pascoa-body { padding: 30px; text-align: center; }
+.pascoa-body p { color: #475569; font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+
+.pascoa-highlight {
+    background: #fef9c3;
+    color: #854d0e;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    border: 1px dashed #eab308;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-pascoa-action {
+    width: 100%;
+    background: linear-gradient(45deg, #eab308, #f59e0b);
+    color: #4c1d95;
+    border: none;
+    padding: 18px;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.btn-pascoa-action:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(245, 158, 11, 0.4); }
+
+.btn-pascoa-decline {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.btn-pascoa-decline:hover { color: #475569; }
