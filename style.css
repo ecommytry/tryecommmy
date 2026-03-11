@@ -392,3 +392,128 @@ body { background: var(--gray); color: #333; overflow-x: hidden; }
     cursor: pointer;
 }
 .btn-pascoa-decline:hover { color: #475569; }
+
+/* =========================================
+   RESPONSIVIDADE (SMARTPHONES E TABLETS)
+========================================= */
+
+/* Regras aplicadas quando a tela for menor que 768px (Tablets e Celulares) */
+@media (max-width: 768px) {
+
+    /* 1. CABEÇALHO E NAVEGAÇÃO */
+    .nav-main {
+        flex-direction: column; /* Empilha a logo, barra e botões */
+        gap: 15px;
+        padding: 15px 10px;
+    }
+
+    .search-wrapper {
+        width: 100%;
+        order: 3; /* Joga a barra de pesquisa para baixo da logo e icones */
+    }
+
+    .nav-main > div[style*="display: flex"] {
+        /* Ajusta o container do ícone de Login e Carrinho */
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* 2. CATEGORIAS DESLIZÁVEIS (SWIPE) */
+    .categories {
+        flex-wrap: nowrap; /* Impede que os botões caiam para a linha de baixo */
+        overflow-x: auto; /* Permite rolar para o lado */
+        justify-content: flex-start;
+        padding: 10px 15px;
+        -webkit-overflow-scrolling: touch; /* Rolagem suave no iPhone */
+    }
+
+    /* Esconde a barrinha feia de rolagem nas categorias */
+    .categories::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        white-space: nowrap; /* O texto do botão não quebra no meio */
+        font-size: 0.85rem;
+        padding: 8px 15px;
+    }
+
+    /* 3. GRID DE PRODUTOS (2 COLUNAS NO CELULAR) */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Divide em 2 metades iguais */
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    /* Ajuste fino nos cards para caberem 2 lado a lado */
+    .card {
+        padding: 15px 10px;
+    }
+
+    .img-box img {
+        height: 120px; /* Imagem um pouco menor para não vazar */
+    }
+
+    .p-title {
+        font-size: 0.85rem; /* Fonte menor no título do celular */
+        min-height: 40px;
+    }
+
+    .card-buttons {
+        flex-direction: column; /* Botões Detalhes e Adicionar um em cima do outro */
+        gap: 5px;
+    }
+
+    .btn-details, .btn-buy {
+        width: 100%;
+        font-size: 0.8rem;
+        padding: 8px 0;
+    }
+
+    /* 4. MODAIS E PROMOÇÕES */
+    .modal-pascoa-content,
+    .spec-card,
+    .modal-box {
+        width: 95%; /* Modais ocupam quase a tela toda */
+        padding: 20px;
+    }
+
+    .promo-top-right {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: unset;
+    }
+
+    /* 5. CARRINHO LATERAL */
+    .cart-sidebar {
+        width: 100%; /* No celular, o carrinho puxa a tela inteira */
+        right: -100%;
+    }
+
+    /* 6. PÁGINA DE PAGAMENTO (CHECKOUT) */
+    .checkout-container {
+        flex-direction: column; /* Coloca o Resumo em cima e o Pagamento embaixo */
+        padding: 0 10px;
+    }
+
+    .col {
+        min-width: 100%;
+    }
+
+    .checkout-card {
+        padding: 15px; /* Reduz espaço em branco inútil */
+    }
+}
+
+/* Regras extremas para telas MUITO pequenas (ex: iPhone SE, celulares antigos) */
+@media (max-width: 400px) {
+    .product-grid {
+        grid-template-columns: 1fr; /* Volta para 1 produto por linha se a tela for menor que 400px */
+    }
+
+    .pascoa-header h2 {
+        font-size: 1.5rem;
+    }
+}
