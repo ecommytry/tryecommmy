@@ -1,59 +1,491 @@
-    /* =========================================
-       CORREÇÃO DO MODAL DE PÁSCOA (CELULAR)
-    ========================================= */
-    
+/* =========================================
+   1. VARIÁVEIS E RESET GLOBAL
+========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+
+:root {
+    --primary: #0f172a;
+    --secondary: #3b82f6;
+    --accent-green: #00a650; /* Verde estilo Mercado Livre */
+    --error: #e31919;
+    --dark: #1e293b;
+    --bg-gray: #f0f2f5;
+    --text-main: #333333;
+    --text-muted: #64748b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-gray);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* =========================================
+   2. CABEÇALHO E NAVEGAÇÃO (NAVBAR)
+========================================= */
+header {
+    background: var(--primary);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.top-bar {
+    background: var(--secondary);
+    color: white;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 6px;
+    letter-spacing: 1px;
+}
+
+.nav-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+.logo span { color: var(--secondary); }
+
+.search-wrapper {
+    flex: 1;
+    display: flex;
+    max-width: 600px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.search-wrapper input {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-wrapper button {
+    background: white;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+}
+
+.cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.cart-btn:hover { background: rgba(255,255,255,0.2); }
+.cart-btn i { font-size: 1.5rem; }
+
+.cart-info span {
+    background: var(--accent-green);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+.cart-info p { font-size: 0.8rem; margin-top: 2px; }
+
+/* CATEGORIAS E BOTÃO DE PÁSCOA */
+.categories {
+    background: white;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 8px 20px;
+    font-weight: 800;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+.tab-btn:hover, .tab-btn.active {
+    background: var(--bg-gray);
+    color: var(--primary);
+}
+
+.tab-pascoa {
+    background: linear-gradient(45deg, #6b21a8, #9333ea) !important;
+    color: white !important;
+    border-radius: 30px !important;
+    padding: 10px 25px !important;
+    margin-left: 15px;
+    box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+    animation: pulseGlow 2s infinite;
+    border: none !important;
+}
+.tab-pascoa i { color: #facc15; margin-right: 5px; }
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(147, 51, 234, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); }
+}
+
+/* =========================================
+   3. VITRINE DE PRODUTOS
+========================================= */
+.content {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.f-gratis {
+    background: var(--accent-green);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 4px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+}
+
+.img-box {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.img-box img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.rating { color: #f59e0b; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; }
+.rating span { color: var(--text-muted); font-size: 0.75rem; font-weight: normal; }
+
+.p-title { font-size: 1rem; color: #333; min-height: 45px; margin-bottom: 10px; font-weight: 600;}
+.old-p { text-decoration: line-through; color: #999; font-size: 0.85rem; display: block; }
+.new-p { font-size: 1.5rem; font-weight: 900; display: block; margin-bottom: 2px; }
+.parc { font-size: 0.8rem; color: var(--accent-green); font-weight: bold; margin-bottom: 15px; }
+
+.card-buttons { display: flex; gap: 8px; margin-top: auto; }
+.btn-details, .btn-buy {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.85rem;
+}
+.btn-details { background: var(--bg-gray); color: var(--primary); }
+.btn-buy { background: var(--secondary); color: white; }
+.btn-buy:hover { background: #2563eb; }
+
+/* =========================================
+   4. CARROSSEL DE REVIEWS (AVALIAÇÕES)
+========================================= */
+.reviews-section {
+    margin-top: 50px;
+    background: white;
+    padding: 40px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    overflow: hidden;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    width: calc(340px * 24); /* Ajuste pro loop infinito */
+    animation: scroll 40s linear infinite;
+}
+.carousel-track:hover { animation-play-state: paused; }
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-340px * 12)); }
+}
+
+.review-card {
+    min-width: 320px;
+    max-width: 320px;
+    background: var(--bg-gray);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.avatar-cliente-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+.review-header { display: flex; align-items: center; gap: 12px; }
+.reviewer-info h4 { margin: 0; font-size: 1rem; color: #333; }
+
+/* =========================================
+   5. CARRINHO LATERAL
+========================================= */
+.cart-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000;
+}
+.cart-sidebar {
+    position: fixed; top: 0; right: -400px; width: 400px; height: 100vh;
+    background: white; z-index: 1001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+}
+.cart-sidebar.open { right: 0; }
+.cart-header {
+    padding: 20px; background: var(--primary); color: white;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.close-sidebar { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+.sidebar-item {
+    display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+    border-bottom: 1px solid #eee; padding-bottom: 15px;
+}
+.sidebar-item img { width: 60px; height: 60px; object-fit: contain; }
+.sidebar-item-info h4 { font-size: 0.9rem; margin-bottom: 5px; }
+.sidebar-item-info p { color: var(--accent-green); font-weight: bold; }
+.cart-footer { padding: 20px; border-top: 1px solid #eee; }
+.cart-total { display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 15px; }
+.btn-checkout {
+    width: 100%; background: var(--accent-green); color: white; border: none;
+    padding: 15px; border-radius: 8px; font-weight: 900; font-size: 1rem; cursor: pointer;
+}
+
+/* =========================================
+   6. PÁGINA DE CHECKOUT (PAGAR.HTML)
+========================================= */
+.checkout-container { display: flex; max-width: 1200px; margin: 30px auto; gap: 30px; padding: 0 20px; flex-wrap: wrap; }
+.col { flex: 1; min-width: 350px; }
+.checkout-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 25px; }
+.checkout-card h3 { color: var(--primary); border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 20px; font-size: 1.2rem; }
+.item-resumo { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #f9f9f9; }
+.item-resumo img { width: 60px; height: 60px; object-fit: contain; border-radius: 8px; }
+.item-info { flex: 1; }
+.item-name { font-weight: 600; font-size: 0.95rem; color: #333; }
+.item-price { color: var(--accent-green); font-weight: bold; font-size: 0.9rem; }
+.input-group { margin-bottom: 15px; position: relative; }
+.input-group label { display: block; font-size: 0.85rem; font-weight: 700; color: #666; margin-bottom: 5px; }
+.input-group input, .input-group select { width: 100%; padding: 14px; border: 2px solid #eee; border-radius: 8px; font-size: 1rem; transition: 0.3s; box-sizing: border-box; }
+.input-group input:focus, .input-group select:focus { border-color: var(--primary); outline: none; }
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #666; }
+.total-row { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 2px dashed #eee; font-size: 1.4rem; font-weight: 900; color: var(--dark); }
+.savings { color: var(--accent-green); font-size: 0.9rem; font-weight: bold; display: none; margin-top: 5px; text-align: right; }
+.btn-finish { width: 100%; background: var(--accent-green); color: white; border: none; padding: 20px; border-radius: 10px; font-size: 1.1rem; font-weight: 900; cursor: pointer; transition: 0.3s; }
+.btn-finish:disabled { background: #ccc; cursor: not-allowed; }
+
+/* =========================================
+   7. MODAIS (PROMO, SUCESSO, ERRO, PÁSCOA)
+========================================= */
+/* Modal Oferta 20s (Canto da tela) */
+.promo-top-right {
+    display: none; position: fixed; top: 100px; right: 20px; width: 350px;
+    background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    padding: 25px; z-index: 9999; animation: slideInRight 0.5s ease-out; border: 2px solid var(--accent-green);
+}
+@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.modal-badge { background: var(--accent-green); color: white; font-size: 0.7rem; font-weight: 900; padding: 5px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+.promo-content h2 { color: var(--primary); margin-bottom: 10px; font-size: 1.5rem; }
+.promo-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.btn-accept { background: var(--accent-green); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 900; cursor: pointer; }
+.btn-decline { background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; font-size: 0.85rem; }
+.close-promo { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; }
+.progress-bar-container { width: 100%; height: 6px; background: #eee; border-radius: 10px; margin-top: 20px; overflow: hidden; }
+.progress-bar-green { height: 100%; background: var(--accent-green); width: 100%; transition: width 1s linear; }
+
+/* Modal Sucesso / Erro / Login Geral */
+.modal-success, .modal-pascoa-overlay, .modal-specs-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(8px);
+}
+.modal-box, .spec-card {
+    background: white; padding: 40px; border-radius: 20px; text-align: center;
+    max-width: 450px; width: 90%; animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
+}
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.checkmark-circle { width: 80px; height: 80px; border-radius: 50%; display: block; margin: 0 auto 20px; background: var(--accent-green); color: white; line-height: 80px; font-size: 40px; }
+.btn-back { background: var(--primary); color: white; border: none; padding: 15px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; }
+.loading-spinner { display: none; width: 12px; height: 12px; border: 2px solid #ccc; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite linear; margin-left: 10px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Modal Explosivo de Páscoa */
+.modal-pascoa-content {
+    background: white; width: 100%; max-width: 500px; border-radius: 24px;
+    position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: elasticPop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@keyframes elasticPop { 0% { transform: scale(0.3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.close-pascoa { position: absolute; top: 15px; right: 20px; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 1.5rem; cursor: pointer; border-radius: 50%; width: 35px; height: 35px; z-index: 10; transition: 0.3s; }
+.pascoa-header { background: linear-gradient(135deg, #4c1d95 0%, #7e22ce 100%); padding: 40px 20px 30px; text-align: center; color: white; position: relative; }
+.pascoa-icon-bg { width: 80px; height: 80px; background: linear-gradient(135deg, #fef08a 0%, #eab308 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: -70px auto 15px; font-size: 2.5rem; color: #4c1d95; box-shadow: 0 10px 25px rgba(234, 179, 8, 0.4); border: 5px solid white; }
+.pascoa-header h2 { font-size: 2.2rem; font-weight: 900; margin: 0; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+.pascoa-header h3 { font-size: 1.1rem; color: #fde047; font-weight: 600; margin-top: 5px; }
+.pascoa-body { padding: 30px; text-align: center; }
+.pascoa-body p { color: #475569; font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+.pascoa-highlight { background: #fef9c3; color: #854d0e; padding: 15px; border-radius: 12px; font-weight: 800; font-size: 1rem; margin-bottom: 25px; border: 1px dashed #eab308; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-pascoa-action { width: 100%; background: linear-gradient(45deg, #eab308, #f59e0b); color: #4c1d95; border: none; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-pascoa-action:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(245, 158, 11, 0.4); }
+.btn-pascoa-decline { background: transparent; border: none; color: #94a3b8; margin-top: 15px; font-size: 0.9rem; text-decoration: underline; cursor: pointer; }
+
+/* Toasts */
+.toast-container { position: fixed; bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
+.toast { background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.9rem; animation: slideInLeft 0.3s ease-out; border-left: 4px solid var(--accent-green); }
+@keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* =========================================
+   8. RESPONSIVIDADE BLINDADA (MOBILE)
+========================================= */
+@media (max-width: 768px) {
+    /* Navbar Flexível */
+    .nav-main {
+        flex-direction: column !important;
+        gap: 15px !important;
+        padding: 15px !important;
+    }
+    .search-wrapper {
+        width: 100% !important;
+        order: 3 !important; 
+    }
+    .nav-main > div:nth-child(3) {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    /* Categorias Roláveis (Swipe) */
+    .categories {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        justify-content: flex-start !important;
+        padding: 10px 15px !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .categories::-webkit-scrollbar {
+        height: 0px !important; 
+        display: none !important;
+    }
+    .tab-btn { white-space: nowrap !important; }
+
+    /* Grid 2x2 no Celular */
+    .product-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        padding: 0 10px !important;
+    }
+    .card { margin: 0 !important; padding: 10px !important; min-width: auto !important; }
+    .img-box img { height: 110px !important; }
+    .p-title { font-size: 0.85rem !important; height: 35px !important; overflow: hidden !important; }
+    .card-buttons { flex-direction: column !important; gap: 5px !important; }
+    .btn-details, .btn-buy { width: 100% !important; font-size: 0.75rem !important; padding: 8px 0 !important; }
+
+    /* Checkout Mobile */
+    .checkout-container { flex-direction: column !important; padding: 10px !important; margin: 10px auto !important; }
+    .col { min-width: 100% !important; width: 100% !important; }
+
+    /* Modais Gerais Mobile */
+    .modal-box, .spec-card { width: 95% !important; padding: 20px !important; }
+    .promo-top-right { bottom: 10px !important; right: 10px !important; left: 10px !important; top: auto !important; max-width: none !important; }
+    .cart-sidebar { width: 85% !important; }
+
+    /* Correção Fina: Modal de Páscoa Mobile */
     .modal-pascoa-content {
-        width: 95% !important;
-        max-width: 350px !important; /* Evita que fique muito esticado */
-        padding: 0 !important; /* Zera o padding para o cabeçalho roxo encostar na borda */
-        border-radius: 16px !important;
+        width: 95% !important; max-width: 350px !important; padding: 0 !important; border-radius: 16px !important;
     }
+    .pascoa-header { padding: 30px 15px 20px !important; }
+    .pascoa-icon-bg { width: 60px !important; height: 60px !important; font-size: 1.8rem !important; margin: -50px auto 10px !important; border-width: 3px !important; }
+    .pascoa-header h2 { font-size: 1.6rem !important; }
+    .pascoa-header h3 { font-size: 0.9rem !important; }
+    .pascoa-body { padding: 20px 15px !important; }
+    .pascoa-body p { font-size: 0.9rem !important; margin-bottom: 15px !important; }
+    .pascoa-highlight { padding: 10px !important; font-size: 0.85rem !important; margin-bottom: 15px !important; }
+    .btn-pascoa-action { padding: 15px 10px !important; font-size: 0.9rem !important; }
+    .close-pascoa { top: 10px !important; right: 10px !important; width: 30px !important; height: 30px !important; font-size: 1.2rem !important; }
+}
 
-    .pascoa-header {
-        padding: 30px 15px 20px !important; /* Reduz o tamanho do cabeçalho */
-    }
-
-    .pascoa-icon-bg {
-        width: 60px !important;
-        height: 60px !important;
-        font-size: 1.8rem !important;
-        margin: -50px auto 10px !important; /* Ajusta a altura da bolinha para não vazar */
-        border-width: 3px !important;
-    }
-
-    .pascoa-header h2 {
-        font-size: 1.6rem !important; /* Reduz o título principal */
-    }
-
-    .pascoa-header h3 {
-        font-size: 0.9rem !important;
-    }
-
-    .pascoa-body {
-        padding: 20px 15px !important; /* Ajusta o espaçamento do texto e botão */
-    }
-
-    .pascoa-body p {
-        font-size: 0.9rem !important;
-        margin-bottom: 15px !important;
-    }
-
-    .pascoa-highlight {
-        padding: 10px !important;
-        font-size: 0.85rem !important;
-        margin-bottom: 15px !important;
-    }
-
-    .btn-pascoa-action {
-        padding: 15px 10px !important;
-        font-size: 0.9rem !important;
-    }
-
-    .close-pascoa {
-        top: 10px !important;
-        right: 10px !important;
-        width: 30px !important;
-        height: 30px !important;
-        font-size: 1.2rem !important;
-    }
-
+/* Telas MUITO pequenas (ex: iPhone SE) */
+@media (max-width: 380px) {
+    .product-grid { grid-template-columns: 1fr !important; }
+}
